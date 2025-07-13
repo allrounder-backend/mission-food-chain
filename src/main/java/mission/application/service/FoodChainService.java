@@ -38,7 +38,7 @@ public class FoodChainService {
     private List<PossessingFishDto> parsePossessingFishDto(String line) {
         return Arrays.stream(line.split(","))
                 .map(item -> {
-                    Matcher matcher = Pattern.compile("\\[(.+?)-(\\d+)\\]").matcher(item);
+                    Matcher matcher = Pattern.compile("\\[(.+?)-(\\d+)]").matcher(item);
                     matcher.find();
                     return new PossessingFishDto(matcher.group(1), Integer.parseInt(matcher.group(2)));
                 })

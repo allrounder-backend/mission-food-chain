@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 public class ApplicationTest extends TestEnvironment {
     @Test
     void testApplication() {
-        run(List.of("[플랑크톤-10],[정어리-3],[고등어-2]"));
-        assertTrue(output().contains("3일간 생존했습니다. "));
+        run(List.of("[플랑크톤-15],[정어리-3],[멸치-3],[꽁치-2]"));
+        assertTrue(output().contains("5일간 생존했습니다. "));
     }
 
     @Override

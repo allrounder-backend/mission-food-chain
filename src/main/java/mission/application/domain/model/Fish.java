@@ -1,15 +1,19 @@
 package mission.application.domain.model;
 
+import java.util.List;
+
 public class Fish {
     private final int id;
     private final String name;
     private final int trophic;
+    private final List<Integer> preyIds;
     private int quantity;
 
-    public Fish(int id, String name, int trophic, int quantity) {
+    public Fish(int id, String name, int trophic, List<Integer> preyIds, int quantity) {
         this.id = id;
         this.name = name;
         this.trophic = trophic;
+        this.preyIds = preyIds;
         this.quantity = quantity;
     }
 
@@ -23,6 +27,10 @@ public class Fish {
 
     public int getTrophic() {
         return trophic;
+    }
+
+    public List<Integer> getPreyIds() {
+        return preyIds;
     }
 
     public int getQuantity() {

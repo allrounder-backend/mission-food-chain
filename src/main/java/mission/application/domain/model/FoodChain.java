@@ -15,16 +15,17 @@ public class FoodChain {
     public FoodChain(List<FishDto> database, List<PossessingFishDto> possessingFishes) {
         day = 0;
         fishes = new ArrayList<>(
-            possessingFishes.stream()
-                    .map(item -> {
-                        FishDto fishInfo = database.stream()
-                                .filter(fish -> Objects.equals(item.fishName(), fish.name()))
-                                .findAny()
-                                .get();
-                        return new Fish(fishInfo.id(), fishInfo.name(), fishInfo.trophic(), item.quantity());
-                    })
-                    .sorted(Comparator.comparing(Fish::getId))
-                    .toList()
+                possessingFishes.stream()
+                        .map(item -> {
+                            FishDto fishInfo = database.stream()
+                                    .filter(fish -> Objects.equals(item.fishName(), fish.name()))
+                                    .findAny()
+                                    .get();
+                            return new Fish(fishInfo.id(), fishInfo.name(), fishInfo.trophic(),
+                                    fishInfo.preyIds(), item.quantity());
+                        })
+                        .sorted(Comparator.comparing(Fish::getId))
+                        .toList()
         );
     }
 
@@ -40,20 +41,21 @@ public class FoodChain {
     private void onDayPredation() {
         List<Fish> copy = new ArrayList<>(fishes);
         for (Fish predator : copy) {
-            if (predator.getTrophic() == 1) continue;
+            if (predator.getTrophic() == 1)
+                continue;
             onSpicePredation(predator, fishes);
         }
     }
 
     private void onSpicePredation(Fish predator, List<Fish> fishes) {
         int needed = predator.getQuantity();
-        int targetTrophic = predator.getTrophic() - 1;
         int eaten = 0;
 
-        for (Iterator<Fish> iterator = fishes.iterator(); iterator.hasNext() && eaten < needed;) {
+        for (Iterator<Fish> iterator = fishes.iterator(); iterator.hasNext() && eaten < needed; ) {
             Fish prey = iterator.next();
 
-            if (prey == predator || prey.getTrophic() != targetTrophic) continue;
+            if (prey == predator || !predator.getPreyIds().contains(prey.getId()))
+                continue;
 
             while (prey.getQuantity() > 0 && eaten < needed) {
                 prey.subQuantity();
