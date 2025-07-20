@@ -23,14 +23,14 @@ public class Controller {
                         {1},
                         {1},
                         {1},
-                        {2, 3, 4},
-                        {2, 3, 4},
-                        {2, 3, 4},
+                        {2, 3},
+                        {3},
+                        {2, 4},
+                        {5, 6},
                         {5, 6, 7},
-                        {5, 6, 7},
-                        {5, 6, 7},
-                        {8, 9, 10},
-                        {8, 9, 10}
+                        {6, 7},
+                        {8, 10},
+                        {9, 10}
                 };
 
         // 물고기 종류별 수 입력 및 물고기 비 내림
@@ -41,6 +41,6 @@ public class Controller {
         service.setEating(pool, eatingOrder, foodChain);
 
         // 생존 일자 출력
-        view.lastOutput(service.getSurvivalDay(pool));
+        view.lastOutput(service.getSurvivalDay(pool, view));
     }
 }

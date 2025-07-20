@@ -125,5 +125,26 @@ public class Service {
 
         return pool.getDay();
     }
+    public int getSurvivalDay(Pool pool, View view){
+        int[] nums = pool.getNum();
+        boolean noFish;
+        view.todayOutput(pool);
+        // 물고기 없으면 끝나고 물고기 있으면 하루 지남
+        while(true){
+            noFish = true;
+            for(int i = 1; i < nums.length; i++){
+                if(nums[i] != 0){
+                    noFish = false;
+                    break;
+                }
+            }
+            if(noFish)
+                break;
+            oneDay(pool);
+            view.todayOutput(pool);
+        }
+
+        return pool.getDay();
+    }
 
 }
