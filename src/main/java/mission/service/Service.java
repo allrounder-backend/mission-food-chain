@@ -106,7 +106,7 @@ public class Service {
         pool.addDay();
     }
 
-    public int getSurvivalDay(Pool pool, View view){
+    public int getSurvivalDay(Pool pool){
         int[] nums = pool.getNum();
         boolean noFish;
         // 물고기 없으면 끝나고 물고기 있으면 하루 지남
@@ -121,7 +121,6 @@ public class Service {
             if(noFish)
                 break;
             oneDay(pool);
-            view.todayOutput(pool);
         }
 
         return pool.getDay();

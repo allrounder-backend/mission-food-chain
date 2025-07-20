@@ -70,10 +70,10 @@ public class Pool {
         this.orderOfEating.clear();
         // 채우기
         for(int i : types){
-            System.out.print(Fish.Type.fromId(i)+" ");
+//            System.out.print(Fish.Type.fromId(i)+" ");
             this.orderOfEating.add(Fish.Type.fromId(i));
         }
-        System.out.println("\n설정 완료");
+//        System.out.println("\n설정 완료");
     }
 
     // 식사순서 구하는 메소드

@@ -4,13 +4,15 @@ import java.util.Scanner;
 import mission.model.Fish;
 import mission.model.Pool;
 import mission.service.Service;
+import api.Console;
 
 public class View {
-    private Scanner scanner = new Scanner(System.in);
+//    private Scanner scanner = new Scanner(System.in);
 
     public String firstInput(){
         System.out.print("물고기 비로 내릴 물고기를 입력해주세요. (ex. [정어리-5],[고등어-2])\n> ");
-        return scanner.nextLine();
+//        return scanner.nextLine();
+        return Console.readLine();
     }
     public void lastOutput(int num){
         System.out.println(num+"일간 생존했습니다.");

@@ -40,8 +40,7 @@ public class Controller {
         // 먹는 방식 설정
         service.setEating(pool, eatingOrder, foodChain);
 
-        view.todayOutput(pool);
         // 생존 일자 출력
-        view.lastOutput(service.getSurvivalDay(pool, view));
+        view.lastOutput(service.getSurvivalDay(pool));
     }
 }
