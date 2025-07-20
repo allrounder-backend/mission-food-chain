@@ -9,13 +9,13 @@ import mission.domain.pond.PondService;
 import mission.ui.InputView;
 import mission.ui.OutputView;
 
-public class FishController implements Controller {
+public class PondController implements Controller {
 
     private final InputView inputView;
     private final OutputView outputView;
     private final PondService pondService;
 
-    public FishController(InputView inputView, OutputView outputView, PondService pondService) {
+    public PondController(InputView inputView, OutputView outputView, PondService pondService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.pondService = pondService;
