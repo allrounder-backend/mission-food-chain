@@ -20,17 +20,14 @@ public class FishRepository {
         return fishesByType.getOrDefault(type, new LinkedList<>()).size();
     }
 
-    // feed: 먹이사슬 기준으로 가장 id가 낮은 먹잇감을 찾아 하나 꺼냄
-    public Optional<Fish> feed(FishType predatorType) {
-        NutritionLevel predatorLevel = predatorType.getNutritionLevel();
-
-        return fishesByType.entrySet().stream()
-                .filter(entry -> entry.getKey().getNutritionLevel().getLevel() == predatorLevel.getLevel() - 1)
-                .sorted(Comparator.comparingInt(e -> e.getKey().getId()))
-                .filter(entry -> !entry.getValue().isEmpty())
+    public Optional<Fish> feed(List<FishType> ediblePreys) {
+        return ediblePreys.stream()
+                .map(type -> fishesByType.getOrDefault(type, new LinkedList<>()))
+                .filter(queue -> !queue.isEmpty())
                 .findFirst()
-                .map(entry -> entry.getValue().poll());
+                .map(Queue::poll);
     }
+
 
     public Queue<Fish> getPredatorQueue(FishType predatorType) {
         return fishesByType.getOrDefault(predatorType, new LinkedList<>());

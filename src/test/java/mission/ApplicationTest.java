@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class ApplicationTest extends TestEnvironment {
+    // common
     @Test
     void testApplication() {
         run(List.of("[플랑크톤-10],[정어리-3],[고등어-2]"));
@@ -42,6 +43,14 @@ public class ApplicationTest extends TestEnvironment {
         run(List.of("[고등어-5]"));  // 플랑크톤 없음
         assertTrue(output().contains("0일간 생존했습니다."));
     }
+
+    // 응용
+    @Test
+    void 식성이_적용된_먹이사슬에_따라_정확히_소비되는지_검증한다() {
+        run(List.of("[플랑크톤-15],[정어리-3],[멸치-3],[꽁치-2]"));
+        assertTrue(output().contains("5일간 생존했습니다."));
+    }
+
 
     @Override
     public void runMain() {

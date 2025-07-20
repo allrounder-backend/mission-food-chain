@@ -1,7 +1,9 @@
 package mission.domain.pond;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Queue;
+import mission.domain.fish.FeedingRelation;
 import mission.domain.fish.Fish;
 import mission.domain.fish.FishRepository;
 import mission.domain.fish.FishType;
@@ -36,10 +38,15 @@ public class Pond {
     }
 
     private void feedAndFilterHungryFish(FishType predatorType, int count) {
-        long fedCount =
-                java.util.stream.IntStream.range(0, count)
-                        .filter(i -> fishRepository.feed(predatorType).isPresent())
-                        .count();
+        List<FishType> preyTypes = FeedingRelation.getEdiblePrey(predatorType);
+        int fedCount = 0;
+
+        for (int i = 0; i < count; i++) {
+            boolean fed = preyTypes.stream()
+                    .anyMatch(prey -> fishRepository.feed(preyTypes).isPresent());
+
+            if (fed) fedCount++;
+        }
 
         Queue<Fish> predatorQueue = fishRepository.getPredatorQueue(predatorType);
         removeUnfedStrategy.removeUnfed(predatorQueue, predatorType, (int) fedCount);
