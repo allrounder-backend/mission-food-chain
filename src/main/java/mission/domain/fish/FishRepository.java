@@ -32,14 +32,8 @@ public class FishRepository {
                 .map(entry -> entry.getValue().poll());
     }
 
-    // removeIfHungry: 먹이 못 먹은 포식자 제거
-    public void removeIfHungry(FishType predatorType, int fedCount) {
-        Queue<Fish> predatorQueue = fishesByType.getOrDefault(predatorType, new LinkedList<>());
-        int total = predatorQueue.size();
-        int toRemove = total - fedCount;
-        for (int i = 0; i < toRemove; i++) {
-            predatorQueue.poll(); // 먹지 못한 애부터 제거
-        }
+    public Queue<Fish> getPredatorQueue(FishType predatorType) {
+        return fishesByType.getOrDefault(predatorType, new LinkedList<>());
     }
 
     // hasLivingPredators: 아직 생존한 계산대상 물고기 존재 여부 확인

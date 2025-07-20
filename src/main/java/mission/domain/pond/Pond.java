@@ -1,13 +1,17 @@
 package mission.domain.pond;
 
 import java.util.Comparator;
+import java.util.Queue;
+import mission.domain.fish.Fish;
 import mission.domain.fish.FishRepository;
 import mission.domain.fish.FishType;
+import mission.domain.strategy.RemoveUnfedStrategy;
 
 
 public class Pond {
 
     private final FishRepository fishRepository;
+    private final RemoveUnfedStrategy removeUnfedStrategy = new RemoveUnfedStrategy();
 
     public Pond(FishRepository fishRepository) {
         this.fishRepository = fishRepository;
@@ -37,7 +41,8 @@ public class Pond {
                         .filter(i -> fishRepository.feed(predatorType).isPresent())
                         .count();
 
-        fishRepository.removeIfHungry(predatorType, (int) fedCount);
+        Queue<Fish> predatorQueue = fishRepository.getPredatorQueue(predatorType);
+        removeUnfedStrategy.removeUnfed(predatorQueue, predatorType, (int) fedCount);
     }
 
 }
