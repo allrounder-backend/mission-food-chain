@@ -45,11 +45,12 @@ public class ApplicationTest extends TestEnvironment {
         assertTrue(output().contains("0일간 생존했습니다."));
     }
 
-    // 응용
+    // 심화
+
     @Test
-    void 식성이_적용된_먹이사슬에_따라_정확히_소비되는지_검증한다() {
-        run(List.of("[플랑크톤-15],[정어리-3],[멸치-3],[꽁치-2]"));
-        assertTrue(output().contains("5일간 생존했습니다."));
+    void 최대_생존전략으로_4일간_생존한다() {
+        run(List.of("[삼치-1],[고등어-1],[멸치-1],[플랑크톤-3]"));
+        assertTrue(output().contains("4일간 생존했습니다."));
     }
 
 

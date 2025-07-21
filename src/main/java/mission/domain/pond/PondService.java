@@ -4,6 +4,7 @@ import mission.domain.fish.FishRepository;
 import mission.domain.fish.FishType;
 
 import java.util.Map;
+import mission.domain.strategy.SurvivalStrategy;
 
 public class PondService {
 
@@ -19,9 +20,10 @@ public class PondService {
         }
     }
 
-    public PondResultDto simulate() {
-        Pond pond = new Pond(fishRepository);
+    public PondResultDto simulate(SurvivalStrategy strategy) {
+        Pond pond = new Pond(fishRepository, strategy);
         int survivalDays = pond.simulate();
         return new PondResultDto(survivalDays);
     }
+
 }

@@ -6,6 +6,8 @@ import mission.domain.fish.FishType;
 import mission.domain.fish.utils.FishParser;
 import mission.domain.pond.PondResultDto;
 import mission.domain.pond.PondService;
+import mission.domain.strategy.MaxSurvivalStrategy;
+import mission.domain.strategy.SurvivalStrategy;
 import mission.ui.InputView;
 import mission.ui.OutputView;
 
@@ -26,14 +28,16 @@ public class PondController implements Controller {
         try {
             Map<String, Integer> nameToCount = inputView.inputFishRain();
             Map<FishType, Integer> fishCounts = FishParser.toFishTypeMap(nameToCount);
-
             pondService.initializeFish(fishCounts);
 
-            PondResultDto result = pondService.simulate();
+            SurvivalStrategy strategy = new MaxSurvivalStrategy();
+            PondResultDto result = pondService.simulate(strategy);
+
             outputView.printSurvivalResult(result.survivalDays());
 
         } catch (Exception e) {
             outputView.printError(e);
         }
     }
+
 }

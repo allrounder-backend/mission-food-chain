@@ -1,6 +1,7 @@
 package mission.domain.fish;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class FishRepository {
 
@@ -50,4 +51,33 @@ public class FishRepository {
         }
         return result;
     }
+
+    public FishRepository deepCopy() {
+        FishRepository copy = new FishRepository();
+        for (Map.Entry<FishType, Queue<Fish>> entry : this.fishesByType.entrySet()) {
+            copy.fishesByType.put(entry.getKey(), new LinkedList<>(entry.getValue()));
+        }
+        return copy;
+    }
+
+    public List<FishType> getLivingPredatorsShuffled() {
+        return fishesByType.entrySet().stream()
+                .filter(entry -> !entry.getValue().isEmpty())
+                .map(Map.Entry::getKey)
+                .filter(type -> !type.getNutritionLevel().isExcludedFromSurvivalCalculation())
+                .collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
+                    Collections.shuffle(list);
+                    return list;
+                }));
+    }
+
+    public List<FishType> getLivingPredators() {
+        return fishesByType.entrySet().stream()
+                .filter(e -> !e.getValue().isEmpty())
+                .filter(e -> !e.getKey().getNutritionLevel().isExcludedFromSurvivalCalculation())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+
 }

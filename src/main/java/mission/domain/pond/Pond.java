@@ -8,48 +8,19 @@ import mission.domain.fish.Fish;
 import mission.domain.fish.FishRepository;
 import mission.domain.fish.FishType;
 import mission.domain.strategy.RemoveUnfedStrategy;
+import mission.domain.strategy.SurvivalStrategy;
 
 
 public class Pond {
-
     private final FishRepository fishRepository;
-    private final RemoveUnfedStrategy removeUnfedStrategy = new RemoveUnfedStrategy();
+    private final SurvivalStrategy strategy;
 
-    public Pond(FishRepository fishRepository) {
+    public Pond(FishRepository fishRepository, SurvivalStrategy strategy) {
         this.fishRepository = fishRepository;
+        this.strategy = strategy;
     }
 
     public int simulate() {
-        int days = 0;
-
-        while (fishRepository.hasLivingPredators()) {
-            simulateOneDay();
-            days++;
-        }
-
-        return days;
+        return strategy.simulate(fishRepository);
     }
-
-    private void simulateOneDay() {
-        fishRepository.getSnapshot().entrySet().stream()
-                .filter(entry -> !entry.getKey().getNutritionLevel().isExcludedFromSurvivalCalculation())
-                .sorted(Comparator.comparingInt(e -> e.getKey().getId()))
-                .forEach(entry -> feedAndFilterHungryFish(entry.getKey(), entry.getValue()));
-    }
-
-    private void feedAndFilterHungryFish(FishType predatorType, int count) {
-        List<FishType> preyTypes = FeedingRelation.getEdiblePrey(predatorType);
-        int fedCount = 0;
-
-        for (int i = 0; i < count; i++) {
-            boolean fed = preyTypes.stream()
-                    .anyMatch(prey -> fishRepository.feed(preyTypes).isPresent());
-
-            if (fed) fedCount++;
-        }
-
-        Queue<Fish> predatorQueue = fishRepository.getPredatorQueue(predatorType);
-        removeUnfedStrategy.removeUnfed(predatorQueue, predatorType, (int) fedCount);
-    }
-
 }
