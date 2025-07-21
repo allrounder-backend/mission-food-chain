@@ -1,4 +1,4 @@
-package mission.domain;
+package mission.model;
 
 public class Fish {
     private final int id;
