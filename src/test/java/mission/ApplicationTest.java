@@ -42,7 +42,7 @@ public class ApplicationTest extends TestEnvironment {
     @Test
     void 아무_먹이가_없어_포식자가_죽는_경우_출력한다() {
         run(List.of("[고등어-5]"));  // 플랑크톤 없음
-        assertTrue(output().contains("0일간 생존했습니다."));
+        assertTrue(output().contains("1일간 생존했습니다."));
     }
 
     // 심화

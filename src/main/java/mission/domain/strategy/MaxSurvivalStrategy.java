@@ -12,7 +12,7 @@ public class MaxSurvivalStrategy implements SurvivalStrategy {
     private int maxDays = 0;
     private final RemoveUnfedStrategy removeUnfedStrategy = new RemoveUnfedStrategy();
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     @Override
     public void removeUnfed(Queue<Fish> predatorQueue, FishType predatorType, int fedCount) {
