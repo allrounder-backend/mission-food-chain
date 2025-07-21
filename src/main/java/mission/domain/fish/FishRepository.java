@@ -60,17 +60,6 @@ public class FishRepository {
         return copy;
     }
 
-    public List<FishType> getLivingPredatorsShuffled() {
-        return fishesByType.entrySet().stream()
-                .filter(entry -> !entry.getValue().isEmpty())
-                .map(Map.Entry::getKey)
-                .filter(type -> !type.getNutritionLevel().isExcludedFromSurvivalCalculation())
-                .collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
-                    Collections.shuffle(list);
-                    return list;
-                }));
-    }
-
     public List<FishType> getLivingPredators() {
         return fishesByType.entrySet().stream()
                 .filter(e -> !e.getValue().isEmpty())
