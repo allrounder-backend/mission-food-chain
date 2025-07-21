@@ -3,6 +3,7 @@ package mission;
 import java.util.List;
 import mission.adapter.inAdapter.InputTerminal;
 import mission.adapter.outAdapter.OutputTerminal;
+import mission.application.domain.DebugMode;
 import mission.application.domain.dto.FishDto;
 import mission.application.port.inPort.FishLoader;
 import mission.application.port.inPort.Input;
@@ -14,7 +15,7 @@ public class RuntimeConfig implements Config {
     }
 
     public Logger getLogger() {
-        return new OutputTerminal();
+        return new OutputTerminal(DebugMode.NONE);
     }
 
     public FishLoader getFishLoader() {

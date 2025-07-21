@@ -24,7 +24,7 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation("com.github.allrounder-backend:mission-api:1.0.1")
+    implementation("com.github.allrounder-backend:mission-api:1.0.2")
 }
 
 tasks.test {

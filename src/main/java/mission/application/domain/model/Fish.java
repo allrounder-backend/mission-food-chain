@@ -17,6 +17,10 @@ public class Fish {
         this.quantity = quantity;
     }
 
+    public Fish copy() {
+        return new Fish(id, name, trophic, preyIds, quantity);
+    }
+
     public int getId() {
         return id;
     }
@@ -43,5 +47,10 @@ public class Fish {
 
     public void subQuantity(int quantity) {
         this.quantity -= quantity;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s:%d", name, quantity);
     }
 }

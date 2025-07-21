@@ -30,7 +30,7 @@ public class FoodChainService {
         String response = input.getString();
         List<PossessingFishDto> fishes = parsePossessingFishDto(response);
         validateFish(fishes);
-        FoodChain foodChain = new FoodChain(fishDatabase, fishes);
+        FoodChain foodChain = new FoodChain(logger, fishDatabase, fishes);
         int survival = foodChain.calculateSurvivalPeriod();
         logger.print(String.format("%d일간 생존했습니다. ", survival));
     }
