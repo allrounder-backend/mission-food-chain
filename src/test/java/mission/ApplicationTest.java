@@ -29,6 +29,7 @@ public class ApplicationTest extends TestEnvironment {
     @Test
     void 동일한_물고기타입이_중복되면_예외메시지를_출력한다() {
         run(List.of("[고등어-2],[고등어-3]"));
+        System.out.println(output());
         assertTrue(output().contains("중복된 물고기 타입이 존재합니다."));
     }
 

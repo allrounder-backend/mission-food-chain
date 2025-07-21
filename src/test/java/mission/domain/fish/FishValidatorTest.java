@@ -1,8 +1,11 @@
 package mission.domain.fish;
 
+import java.util.Map;
 import mission.domain.fish.FishType;
+import mission.domain.fish.exception.DuplicateFishException;
 import mission.domain.fish.exception.FishError;
 import mission.domain.fish.exception.InvalidFishException;
+import mission.domain.fish.utils.FishParser;
 import mission.domain.fish.validate.FishValidator;
 import org.junit.jupiter.api.Test;
 
@@ -24,4 +27,5 @@ class FishValidatorTest {
         );
         assertEquals(FishError.INVALID_FISH_NAME, exception.getError());
     }
+
 }
