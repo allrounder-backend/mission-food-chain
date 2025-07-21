@@ -1,43 +1,34 @@
 package mission.domain.fish;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
+/**
+ * 각 FishType에 대해 먹이 관계를 정의하는 팩토리 클래스
+ */
 public class FeedingRelation {
-    private static final List<Relation> RELATIONS = List.of(
-            new Relation(1, FishType.ANCHOVY, FishType.PLANKTON),
-            new Relation(2, FishType.SARDINE, FishType.PLANKTON),
-            new Relation(3, FishType.SMELT, FishType.PLANKTON),
-            new Relation(4, FishType.MACKEREL, FishType.ANCHOVY),
-            new Relation(5, FishType.MACKEREL, FishType.SARDINE),
-            new Relation(6, FishType.HORSE_MACKEREL, FishType.SARDINE),
-            new Relation(7, FishType.SAURY, FishType.ANCHOVY),
-            new Relation(8, FishType.SAURY, FishType.SMELT),
-            new Relation(9, FishType.SPANISH_MACKEREL, FishType.MACKEREL),
-            new Relation(10, FishType.SPANISH_MACKEREL, FishType.HORSE_MACKEREL),
-            new Relation(11, FishType.TUNA, FishType.MACKEREL),
-            new Relation(12, FishType.TUNA, FishType.HORSE_MACKEREL),
-            new Relation(13, FishType.TUNA, FishType.SAURY),
-            new Relation(14, FishType.AMBERJACK, FishType.HORSE_MACKEREL),
-            new Relation(15, FishType.AMBERJACK, FishType.SAURY),
-            new Relation(16, FishType.SWORDFISH, FishType.SPANISH_MACKEREL),
-            new Relation(17, FishType.SWORDFISH, FishType.AMBERJACK),
-            new Relation(18, FishType.SHARK, FishType.TUNA),
-            new Relation(19, FishType.SHARK, FishType.AMBERJACK)
-    );
 
-    public static List<FishType> getEdiblePrey(FishType predator) {
-        return RELATIONS.stream()
-                .filter(r -> r.predator().equals(predator))
-                .sorted()
-                .map(Relation::prey)
-                .collect(Collectors.toList());
+    private static final Map<FishType, List<FishType>> RELATION_MAP = new HashMap<>();
+
+    static {
+        add(FishType.ANCHOVY, FishType.PLANKTON);
+        add(FishType.SARDINE, FishType.PLANKTON);
+        add(FishType.SMELT, FishType.PLANKTON);
+        add(FishType.MACKEREL, FishType.ANCHOVY, FishType.SARDINE);
+        add(FishType.HORSE_MACKEREL, FishType.SARDINE);
+        add(FishType.SAURY, FishType.ANCHOVY, FishType.SMELT);
+        add(FishType.SPANISH_MACKEREL, FishType.MACKEREL, FishType.HORSE_MACKEREL);
+        add(FishType.TUNA, FishType.MACKEREL, FishType.HORSE_MACKEREL, FishType.SAURY);
+        add(FishType.AMBERJACK, FishType.HORSE_MACKEREL, FishType.SAURY);
+        add(FishType.SWORDFISH, FishType.SPANISH_MACKEREL, FishType.AMBERJACK);
+        add(FishType.SHARK, FishType.TUNA, FishType.AMBERJACK);
     }
 
-    private record Relation(int id, FishType predator, FishType prey) implements Comparable<Relation> {
-        @Override
-        public int compareTo(Relation o) {
-            return Integer.compare(this.id, o.id);
-        }
+    private static void add(FishType predator, FishType... prey) {
+        RELATION_MAP.put(predator, List.of(prey));
+    }
+
+
+    public static List<FishType> getEdiblePrey(FishType predator) {
+        return RELATION_MAP.getOrDefault(predator, List.of());
     }
 }
