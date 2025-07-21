@@ -1,6 +1,8 @@
 package mission;
 
+import mission.controller.FishController;
 import mission.model.Fish;
+import mission.view.FishInputView;
 
 import java.util.List;
 
@@ -22,6 +24,10 @@ public class Application {
                 new Fish(11, "황새치", 5),
                 new Fish(12, "상어", 5)
         );
+
+        FishInputView inputView = new FishInputView();
+        FishController controller = new FishController(data, inputView);
+        controller.run();
 
 
     }

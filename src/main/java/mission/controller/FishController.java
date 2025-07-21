@@ -1,9 +1,12 @@
 package mission.controller;
 
 import mission.model.Fish;
+import mission.model.FishWithCount;
 import mission.util.FishInputParser;
+import mission.util.SurvivalSimulator;
 import mission.view.FishInputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,13 +25,18 @@ public class FishController {
 
         Map<String, Integer> fishCounts = FishInputParser.parseInput(input);
 
+
+        List<FishWithCount> fishList = new ArrayList<>();
         for(Map.Entry<String, Integer> entry : fishCounts.entrySet()){
-            String name = entry.getKey();
             int count = entry.getValue();
-
-            Fish fish = findFishByName(name);
-
+            Fish fish = findFishByName(entry.getKey());
+            fishList.add(new FishWithCount(fish, count));
         }
+
+        SurvivalSimulator simulator = new SurvivalSimulator();
+        int days = simulator.simulate(fishList);
+
+        System.out.println(days + "일간 생존했습니다.");
 
     }
 
@@ -38,6 +46,6 @@ public class FishController {
                 return fish;
             }
         }
-        throw new RuntimeException("존재하지 않는 물고기입니다.");
+        throw new IllegalArgumentException("존재하지 않는 물고기입니다.");
     }
 }
