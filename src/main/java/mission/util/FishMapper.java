@@ -1,5 +1,7 @@
 package mission.util;
 
+import mission.exception.ErrorCode;
+import mission.exception.InvalidException;
 import mission.model.Fish;
 import mission.model.FishWithCount;
 
@@ -14,7 +16,7 @@ public class FishMapper {
                     Fish fish = fishData.stream()
                             .filter(f-> f.getName().equals(entry.getKey()))
                             .findFirst()
-                            .orElseThrow(()-> new IllegalArgumentException("존재하지 않음"));
+                            .orElseThrow(()-> new InvalidException(ErrorCode.FISH_NOT_FOUND));
                     return new FishWithCount(fish, entry.getValue());
                 })
                 .collect(Collectors.toList());

@@ -1,5 +1,6 @@
 package mission.controller;
 
+import mission.exception.InvalidException;
 import mission.factory.PredationGraphFactory;
 import mission.model.Fish;
 import mission.model.FishWithCount;
@@ -22,17 +23,23 @@ public class FishController {
         this.inputView = inputView;
     }
 
-    public void run(){
-        String input = inputView.inputFish();
+    public void run() {
+        try {
+            String input = inputView.inputFish();
 
-        Map<String, Integer> fishCountMap = FishInputParser.parseInput(input);
-        List<FishWithCount> fishWithCounts = FishMapper.mapToFishWithCount(fishData, fishCountMap);
+            Map<String, Integer> fishCountMap = FishInputParser.parseInput(input);
+            List<FishWithCount> fishWithCounts = FishMapper.mapToFishWithCount(fishData, fishCountMap);
 
-        Map<Integer, List<Integer>> predationGraph = PredationGraphFactory.createDefaultGraph();
+            Map<Integer, List<Integer>> predationGraph = PredationGraphFactory.createDefaultGraph();
 
-        SurvivalSimulator simulator = new SurvivalSimulator(predationGraph);
-        int days = simulator.simulate(fishWithCounts);
+            SurvivalSimulator simulator = new SurvivalSimulator(predationGraph);
+            int days = simulator.simulate(fishWithCounts);
 
-        OutputView.resultOutput(days);
+            OutputView.resultOutput(days);
+
+        } catch (InvalidException e) {
+            OutputView.errorOutput(e.getErrorCode().getMessage());
+        }
     }
+
 }

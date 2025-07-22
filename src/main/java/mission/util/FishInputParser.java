@@ -1,5 +1,8 @@
 package mission.util;
 
+import mission.exception.ErrorCode;
+import mission.exception.InvalidException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +22,7 @@ public class FishInputParser {
 
                 String[] parts = item.split("-");
                 if (parts.length != 2) {
-                    throw new IllegalArgumentException("잘못된 입력");
+                    throw new InvalidException(ErrorCode.INVALID_FORMAT);
                 }
 
                 String name = parts[0];
@@ -28,23 +31,25 @@ public class FishInputParser {
                 try {
                     count = Integer.parseInt(parts[1]);
                 } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException("숫자 형식이 잘못되었습니다: " + parts[1]);
+                    throw new InvalidException(ErrorCode.INVALID_FORMAT);
                 }
 
                 if (count < 0) {
-                    throw new IllegalArgumentException("잘못된 입력");
+                    throw new InvalidException(ErrorCode.INVALID_COUNT);
                 }
 
                 map.put(name, count);
             }
 
             if (map.isEmpty()) {
-                throw new IllegalArgumentException("입력에 유효한 항목이 없습니다.");
+                throw new InvalidException(ErrorCode.EMPTY_INPUT);
             }
 
             return map;
+        } catch (InvalidException e) {
+            throw e;
         } catch (Exception e) {
-            throw new IllegalArgumentException("잘못된 입력");
+            throw  new InvalidException(ErrorCode.INVALID_FORMAT);
         }
     }
-    }
+}
