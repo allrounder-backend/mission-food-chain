@@ -1,10 +1,10 @@
-package mission.util;
+package mission.Service;
 
 import mission.model.FishWithCount;
 import java.util.*;
 
 public class SurvivalSimulator {
-    private Map<Integer, List<Integer>> predationGraph;
+    private final Map<Integer, List<Integer>> predationGraph;
 
     public SurvivalSimulator(Map<Integer, List<Integer>> predationGraph) {
         this.predationGraph = predationGraph;
