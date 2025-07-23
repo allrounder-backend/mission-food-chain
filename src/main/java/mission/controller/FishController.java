@@ -6,7 +6,7 @@ import mission.model.Fish;
 import mission.model.FishWithCount;
 import mission.util.FishInputParser;
 import mission.util.FishMapper;
-import mission.Service.SurvivalSimulator;
+import mission.service.SurvivalSimulator;
 import mission.view.FishInputView;
 import mission.view.OutputView;
 

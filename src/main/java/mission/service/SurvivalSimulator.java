@@ -1,4 +1,4 @@
-package mission.Service;
+package mission.service;
 
 import mission.model.FishWithCount;
 import java.util.*;
