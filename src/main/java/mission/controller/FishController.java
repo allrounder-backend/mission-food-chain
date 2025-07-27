@@ -1,6 +1,6 @@
 package mission.controller;
 
-import mission.exception.InvalidException;
+import mission.exception.InvalidInputException;
 import mission.factory.PredationGraphFactory;
 import mission.model.Fish;
 import mission.model.FishWithCount;
@@ -37,7 +37,7 @@ public class FishController {
 
             OutputView.resultOutput(days);
 
-        } catch (InvalidException e) {
+        } catch (InvalidInputException e) {
             OutputView.errorOutput(e.getErrorCode().getMessage());
         }
     }

@@ -1,7 +1,7 @@
 package mission.util;
 
-import mission.exception.ErrorCode;
-import mission.exception.InvalidException;
+import mission.exception.InputErrorCode;
+import mission.exception.InvalidInputException;
 import mission.model.Fish;
 import mission.model.FishWithCount;
 
@@ -16,7 +16,7 @@ public class FishMapper {
                     Fish fish = fishData.stream()
                             .filter(f-> f.getName().equals(entry.getKey()))
                             .findFirst()
-                            .orElseThrow(()-> new InvalidException(ErrorCode.FISH_NOT_FOUND));
+                            .orElseThrow(()-> new InvalidInputException(InputErrorCode.FISH_NOT_FOUND));
                     return new FishWithCount(fish, entry.getValue());
                 })
                 .collect(Collectors.toList());
