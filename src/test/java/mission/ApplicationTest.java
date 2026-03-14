@@ -81,6 +81,11 @@ public class ApplicationTest extends TestEnvironment {
         });
     }
 
+    @Test
+    void 예외발생테스트() {
+        assertThrows(IllegalArgumentException.class, () -> run("잘못된 입력"));
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
